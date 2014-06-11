@@ -20,6 +20,8 @@ Little attention has been paid to making this particularly scalable, but it shou
 * separated out logic into different handlers
 * moved to micro framework
 
+####Note: remember to add the app engine app to the google apps domain!!
+
 
 ####TODO
 
