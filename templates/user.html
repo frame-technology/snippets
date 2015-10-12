@@ -1,30 +1,53 @@
 {% extends "base.html" %}
 
 {% block body %}
+<div class="row">
+  <div class="col-md-12">
 
-  <div style="float: left; width: 300px">
-    <h2>{{ user.email }}</h2>
-
-    {% if following %}
+    <h2>Snippets for {{ user.email }} <small>{% if following %}
       ✓ <a class="light" href="/unfollow?user={{ user.email }}&continue=/user/{{ user.email }}">unfollow</a>
     {% else %}
       <a class="light" href="/follow?user={{ user.email }}&continue=/user/{{ user.email }}">follow</a>
+    {% endif %}</small></h2>
+
+
+</div>
+</div>
+
+{%if owner %}
+<div class="row">
+  <div class="col-md-12">
+    <b>This is you!</b> Currently
+    {% if current_user.enabled %}
+      enabled (<a class="light" href="?setenabled=0">disable</a>)
+    {% else %}
+      disabled (<a class="light" href="?setenabled=1">enable</a>)
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<div class="row">
+<div class="col-md-3 pull-right well">
+    <img class="img-thumbnail pull-right" src="https://0.gravatar.com/avatar/{{email_md5}}?s=215" >
+    <b>Tags</b><br/>
+    {%if not owner %}
+      {% for tag in tags %}
+          {{ tag.0 }}
+  		    {% if tag.1 %}
+  		      ✓ <a class="light" href="/unfollow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">unfollow</a>
+  		    {% else %}
+  		      <a class="light" href="/follow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">follow</a>
+  		    {% endif %}
+          <br/>
+      {% endfor %}
+    {% else %}
+      <form method="get"><input name="tags" class="span2" type="text" placeholder="tag1, tag2"  value="{{ current_user.tags|join:"," }}"/></form>
     {% endif %}
 
-    <br/></br>
-    <b>Tags</b><br/>
-    {% for tag in tags %}
-        {{ tag.0 }}
-		    {% if tag.1 %}
-		      ✓ <a class="light" href="/unfollow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">unfollow</a>
-		    {% else %}
-		      <a class="light" href="/follow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">follow</a>
-		    {% endif %}
-        <br/>
-    {% endfor %}
-
   </div>
-  <div style="float: left; margin-left: 30px; max-width: 600px">
+
+  <div class="col-md-8">
     {% for snippet in snippets %}
       <b>{{ snippet.date }}</b><br/>
       <pre>{{ snippet.text|urlize }}</pre>
@@ -32,4 +55,7 @@
     {% endfor %}
    </div>
 
+</div>
 {% endblock %}
+
+{% block title %}Snippets for {{ user.email }}{% endblock %}
