@@ -5,6 +5,7 @@ DEBUG = True
 SITE_DOMAIN = "example.com"
 SITE_NAME = "Snippets"
 SITE_EMAIL = "snippets@" + SITE_DOMAIN
+SITE_ICON = ""
 ADMIN_EMAIL = "admin@example.com"
 
 SESSION_SECRET_KEY = ''
