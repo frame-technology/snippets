@@ -15,7 +15,14 @@ class ReceiveEmail(InboundMailHandler):
     """Receive a snippet email and create or replace snippet for this week."""
 
     def receive(self, message):
-        user = user_from_email(email.utils.parseaddr(message.sender)[1])
+        # Added support for email aliases
+        return_path = message.original.get('Return-Path')
+        if return_path:
+            canonical_from_address=return_path
+        else:
+            canonical_from_address=message.sender
+
+        user = user_from_email(email.utils.parseaddr(canonical_from_address)[1])
         for content_type, body in message.bodies('text/plain'):
             # http://stackoverflow.com/questions/4021392/how-do-you-decode-a-binary-encoded-mail-message-in-python
             if body.encoding == '8bit':
