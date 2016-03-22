@@ -36,7 +36,8 @@ class BaseHandler(webapp2.RequestHandler):
             'current_version':os.environ["CURRENT_VERSION_ID"],
             'site_name':settings.SITE_NAME,
             'site_email':settings.SITE_EMAIL,
-        }
+            'site_icon':settings.SITE_ICON,
+            }
 
 
         self.user = {
