@@ -27,3 +27,10 @@ Little attention has been paid to making this particularly scalable, but it shou
 
 * migrate away from app engine mail (maybe?)
 * make email template based.
+
+---
+
+###Chanes by Frank Harris
+
+* Added support for email aliases (frank@domain.com --> frank.harris@domain.com)
+* Moved the organization avatar to settings
