@@ -15,7 +15,7 @@ Hey!
 Your teammates want to know what you're up to. Don't leave 'em hanging.
 
 Simply respond to this email with...
-- highs and lows for the past week
+- highs and lows for last week
 - plans for upcoming week
 - any obstacles or challenges in your path
 
