@@ -33,7 +33,7 @@ class ReceiveEmail(InboundMailHandler):
             split_email = re.split(sig_pattern, content)
             content = split_email[0]
 
-            reply_pattern = re.compile(r'^On.*at.*snippets', re.MULTILINE)
+            reply_pattern = re.compile(r'^On.*at.*Snippets', re.MULTILINE)
             split_email = re.split(reply_pattern, content)
             content = split_email[0]
 
