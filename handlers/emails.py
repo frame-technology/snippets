@@ -11,9 +11,18 @@ from django.conf import settings
 from utilities import framework
 
 REMINDER = """
-Hey nerd,
+Hey!
+Your teammates want to know what you're up to. Don't leave 'em hanging.
 
-The kids want to know what you're up to. Don't leave 'em hanging.
+Simply respond to this email with...
+- highs and lows for the past week
+- plans for upcoming week
+- any obstacles or challenges in your path
+
+Feel free to link to wiki pages, designs, Google Docs or Github commits.
+
+Hugs,
+Snippets
 """
 
 
@@ -27,7 +36,7 @@ class ReminderEmail(framework.BaseHandler):
 
 class OneReminderEmail(framework.BaseHandler):
     def post(self):
-        mail.send_mail(sender="snippets <" + settings.SITE_EMAIL + ">",
+        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
                        to=self.request.get('email'),
                        subject="Snippet time!",
                        body=REMINDER)
@@ -45,7 +54,7 @@ class DigestEmail(framework.BaseHandler):
 
 class OneDigestEmail(framework.BaseHandler):
     def __send_mail(self, recipient, body):
-        mail.send_mail(sender="snippets <" + settings.SITE_EMAIL + ">",
+        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
                        to=recipient,
                        subject="Snippet delivery!",
                        body=body)
