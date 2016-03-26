@@ -12,6 +12,7 @@ from utilities import framework
 
 REMINDER = """
 Hey!
+
 Your teammates want to know what you're up to. Don't leave 'em hanging.
 
 Simply respond to this email with...
