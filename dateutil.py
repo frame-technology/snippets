@@ -40,6 +40,6 @@ def date_for_new_snippet():
     return aligned 
 
 def date_for_retrieval():
-    """Always return the most recent Monday."""
+    """Always return the previous Monday."""
     today = datetime.datetime.now(Eastern_tzinfo()).date()
-    return today - datetime.timedelta(days=today.weekday())
+    return today - datetime.timedelta(weeks=1)
