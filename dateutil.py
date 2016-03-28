@@ -31,7 +31,13 @@ class Eastern_tzinfo(datetime.tzinfo):
         
         
 def date_for_new_snippet():
-    return date_for_retrieval()
+    """Return most recent Monday, unless it is Monday (0)"""
+    today = datetime.datetime.now(Eastern_tzinfo()).date()
+    if (today.weekday() == 0):
+        aligned = today - datetime.timedelta(weeks=1)
+    else:
+        aligned = today - datetime.timedelta(days=today.weekday()) 
+    return aligned 
 
 def date_for_retrieval():
     """Always return the most recent Monday."""
