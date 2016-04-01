@@ -20,7 +20,7 @@ Simply respond to this email with...
 - plans for upcoming week
 - any obstacles or challenges in your path
 
-Feel free to link to wiki pages, designs, Google Docs or Github commits.
+Feel free to link to wiki pages, designs, Google Docs or Github commits. Snippets are due by Monday at 7pm.
 
 Hugs,
 Snippets
