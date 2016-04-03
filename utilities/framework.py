@@ -82,7 +82,7 @@ class BaseHandler(webapp2.RequestHandler):
         body = "\n------\n".join(error_message)
         logging.error(body)
 
-        mail.send_mail_to_admins(sender=settings.ADMIN_EMAIL, subject=subject, body=body)
+        mail.send_mail_to_admins(sender="Snippets <" + settings.SITE_EMAIL + ">", subject=subject, body=body)
         template_values = {}
         if users.is_current_user_admin() or os.environ['SERVER_SOFTWARE'] == 'Development/1.0':
             template_values['traceback'] = body
