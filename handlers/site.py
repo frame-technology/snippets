@@ -128,6 +128,7 @@ class TagHandler(framework.BaseHandler):
         template_values = {
                            'current_user': user,
                            'snippets': all_snippets,
+                           'email_md5': email_md5,
                            'following': following,
                            'tag': tag
                            }
