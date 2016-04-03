@@ -23,7 +23,8 @@
   <div class="col-md-12">
 
     {% for snippet in snippets %}
-       <b><a href="/user/{{ snippet.user.email }}">{{ snippet.user.pretty_name }}</a></b><br/>
+      <b><img class="img-circle" src="https://0.gravatar.com/avatar/{{snippet.email_md5 }}?s=25" >
+      <b><a href="/user/{{ snippet.user.email }}">{{ snippet.user.pretty_name }}</a></b><br/>
       <pre>{{ snippet.text|urlize }}</pre>
       <br/>
     {% endfor %}
