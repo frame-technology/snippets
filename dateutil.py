@@ -42,4 +42,5 @@ def date_for_new_snippet():
 def date_for_retrieval():
     """Always return the previous Monday."""
     today = datetime.datetime.now(Eastern_tzinfo()).date()
-    return today - datetime.timedelta(weeks=1)
+    #return today - datetime.timedelta(weeks=1)
+    return date_for_new_snippet()
