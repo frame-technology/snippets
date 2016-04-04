@@ -49,13 +49,10 @@ class OneReminderEmail(framework.BaseHandler):
             subject = "Re: " + subject 
             body = "Just a heads up, your snippets are due by 7pm today."
         
-        logging.info(self.request.get('email'))
-        logging.info(subject)
-        logging.info(body)
-        #mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
-        #               to=self.request.get('email'),
-        #               subject=subject,
-        #               body=body)
+        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
+                       to=self.request.get('email'),
+                       subject=subject,
+                       body=body)
 
     def get(self):
         self.post()
