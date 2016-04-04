@@ -29,18 +29,30 @@ Snippets
 
 class ReminderEmail(framework.BaseHandler):
     def get(self):
+        d = date_for_retrieval()
         all_users = User.all().filter("enabled =", True).fetch(500)
+        
         for user in all_users:
-            # TODO: Check if one has already been submitted for this period.
-            taskqueue.add(url='/onereminder', params={'email': user.email})
-
+            if user.email in submitted_users(d):
+                logging.info("Submitted: " + user.email) 
+            else:
+                taskqueue.add(url='/onereminder', params={
+                    'email': user.email,
+                    'final': self.request.get('final')
+                    })
 
 class OneReminderEmail(framework.BaseHandler):
     def post(self):
+        body = REMINDER
+        subject = "Snippet time!"
+        if self.request.get('final') == "true":
+            subject = "Re: " + subject 
+            body = "Just a heads up, your snippets are due by 7pm today."
+        
         mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
                        to=self.request.get('email'),
-                       subject="Snippet time!",
-                       body=REMINDER)
+                       subject=subject,
+                       body=body)
 
     def get(self):
         self.post()
