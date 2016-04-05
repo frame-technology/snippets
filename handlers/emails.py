@@ -88,6 +88,6 @@ class OneDigestEmail(framework.BaseHandler):
         logging.info(all_snippets)
         body = '\n\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
         if body:
-            self.__send_mail(user.email, 'https://' + settings.SITE_DOMAIN + '\n\n' + body)
+            self.__send_mail(user.email, body)
         else:
             logging.info(user.email + ' not following anybody.')
