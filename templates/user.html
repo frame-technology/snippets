@@ -5,11 +5,11 @@
 <div class="row">
   <div class="col-md-12">
 
-    <h2>Snippets for {{ user.email }} <small>{% if following %}
+    <h2>Snippets for {{ user.email }} <small>{% if not owner %}{% if following %}
       ✓ <a class="light" href="/unfollow?user={{ user.email }}&continue=/user/{{ user.email }}">unfollow</a>
     {% else %}
       <a class="light" href="/follow?user={{ user.email }}&continue=/user/{{ user.email }}">follow</a>
-    {% endif %}</small></h2>
+      {% endif %}{% endif %}</small></h2>
 
 
 </div>
