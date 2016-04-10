@@ -45,12 +45,24 @@ class OneReminderEmail(framework.BaseHandler):
     def post(self):
         body = REMINDER
         subject = "Snippet time!"
+        email = self.request.get('email')
         if self.request.get('final') == "true":
             subject = "Re: " + subject 
-            body = "Just a heads up, your snippets are due by 7pm today."
+            body = "Just a heads up, your snippet is due by 7pm today."
         
+        else:
+            desired_user = user_from_email(email)
+            snippets = desired_user.snippet_set
+            snippets = sorted(snippets, key=lambda s: s.date, reverse=True)
+
+            if snippets:
+                last_snippet = 'Week of %s\n%s\n%s' % (snippets[0].date, '-'*30,
+                        snippets[0].text)
+                ps = "PS. I've included your most recent snippet below to help you get started."
+                body = '%s\n%s\n\n%s' % (body, ps, last_snippet)
+
         mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
-                       to=self.request.get('email'),
+                       to=email,
                        subject=subject,
                        body=body)
 
