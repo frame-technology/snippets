@@ -22,10 +22,8 @@ class Snippet(db.Model):
 def submitted_users(date):
     all_snippets = Snippet.all().filter("date =", date).fetch(500)
     users = set()
-
     for s in all_snippets:
         users.add(s.user.email)
-    
     return users
 
 def compute_following(current_user, users):
