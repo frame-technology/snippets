@@ -49,14 +49,14 @@ class OneReminderEmail(framework.BaseHandler):
         if self.request.get('final') == "true":
             subject = "Re: " + subject 
             body = "Just a heads up, your snippet is due by 7pm today."
-        
+
         else:
             desired_user = user_from_email(email)
             snippets = desired_user.snippet_set
             snippets = sorted(snippets, key=lambda s: s.date, reverse=True)
 
             if snippets:
-                last_snippet = 'Week of %s\n%s\n%s' % (snippets[0].date, '-'*30,
+                last_snippet = 'Week of %s\n%s\n%s' % (snippets[0].date, '-' * 30,
                         snippets[0].text)
                 ps = "PS. I've included your most recent snippet below to help you get started."
                 body = '%s\n%s\n\n%s' % (body, ps, last_snippet)
@@ -98,8 +98,17 @@ class OneDigestEmail(framework.BaseHandler):
         all_users = User.all().fetch(500)
         following = compute_following(user, all_users)
         logging.info(all_snippets)
-        body = '\n\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
+        body = '\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
         if body:
+            followed_users = [u.encode('UTF8') for u in user.following]
+            missing = set()
+            for u in followed_users:
+                if u not in submitted_users(d):
+                    missing.add(u.split('@')[0])
+            title = 'For the week of %s\n%s' % (d, '-' * 30)
+            if missing:
+                title += '\nNo snippets from: %s' % (", ".join(missing))
+            body = '%s\n%s\n\n\n%s' % (title, settings.SITE_DOMAIN, body)
             self.__send_mail(user.email, body)
         else:
             logging.info(user.email + ' not following anybody.')

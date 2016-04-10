@@ -30,7 +30,11 @@ Little attention has been paid to making this particularly scalable, but it shou
 
 ---
 
-###Chanes by Frank Harris
+###Changes by Frank Harris
 
 * Added support for email aliases (frank@domain.com --> frank.harris@domain.com)
 * Moved the organization avatar to settings
+* Added support for custom filters/tags
+* Added last submitted snippet to reminder email
+* Added a final reminder email
+* General usability improvements and clean-up
