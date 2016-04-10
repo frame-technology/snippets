@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load snippets_extras %}
 
 {% block body %}
 <div class="row">
@@ -49,7 +50,8 @@
 
   <div class="col-md-8">
     {% for snippet in snippets %}
-      <b>{{ snippet.date }}</b><br/>
+      <b>Week {{ snippet.date|date:"W" }}: 
+        {{ snippet.date }} - {{ snippet.date|deltaDays }}</b><br/>
       <pre>{{ snippet.text|urlize }}</pre>
       <br/></br>
     {% endfor %}
