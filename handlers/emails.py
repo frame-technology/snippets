@@ -48,7 +48,7 @@ class OneReminderEmail(framework.BaseHandler):
         email = self.request.get('email')
         if self.request.get('final') == "true":
             subject = "Re: " + subject 
-            body = "Just a heads up, your snippet is due by 7pm today."
+            body = "Just a heads up, your snippet is due by 7pm tomorrow.\n"
 
         else:
             desired_user = user_from_email(email)
