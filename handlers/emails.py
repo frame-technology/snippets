@@ -105,7 +105,7 @@ class OneDigestEmail(framework.BaseHandler):
             for u in followed_users:
                 if u not in submitted_users(d):
                     missing.add(u.split('@')[0])
-            title = 'For the week of %s\n%s' % (d, '-' * 30)
+            title = 'For the week of %s\n%s' % (d, '-' * 50)
             if missing:
                 title += '\nNo snippets from: %s' % (", ".join(missing))
             body = '%s\n%s\n\n\n%s' % (title, settings.SITE_DOMAIN, body)
