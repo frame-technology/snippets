@@ -42,3 +42,7 @@ def date_for_new_snippet():
 def date_for_retrieval():
     """Always return the previous Monday."""
     return date_for_new_snippet()
+
+def date_for_missed_snippets():
+    """Always return the Monday from the last completed cycle."""
+    return date_for_retrieval() - datetime.timedelta(weeks=1)

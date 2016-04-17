@@ -1,4 +1,5 @@
 import logging
+import random
 
 from google.appengine.api import mail
 from google.appengine.api import taskqueue
@@ -26,6 +27,78 @@ Hugs,
 Snippets
 """
 
+FINAL_REMINDER = """
+Just a heads up, your snippet is due by 7pm tomorrow.
+"""
+
+MISSED_SNIPPETS = """
+Hey there,
+
+We all know that sometimes you have a few too many things to do and you run out
+of time to submit a snippet. Don't sweat it -- every week you get another chance
+to reflect and share your work!
+"""
+
+class MissedEmail(framework.BaseHandler):
+    def get(self):
+        d = date_for_missed_snippets()
+        all_users = User.all().filter("enabled =", True).fetch(500)
+       
+        for user in all_users:
+            if user.email in submitted_users(d):
+                logging.info("Submitted: " + user.email) 
+            else:
+                all_followers = "no_followers"
+                followers = list()
+                for f in all_users:
+                    if user.email in f.following:
+                        followers.append(f.email.split('@')[0])
+
+                if followers:
+                    all_followers = ','.join(map(str, followers)) 
+        
+                taskqueue.add(url='/onemissed', params={
+                        'email': user.email,
+                        'all_followers': all_followers
+                        })
+
+class OneMissedEmail(framework.BaseHandler):
+    def post(self):
+        email = self.request.get('email')
+        all_followers = self.request.get('all_followers')
+       
+        if all_followers != "no_followers":
+            followers = [f.encode('UTF8') for f in all_followers.split(',')]
+            remaining_followers = len(followers) - 1
+
+            subject = ':( :( :( %s and %s others missed hearing from you!' % ( 
+                    random.choice(followers), 
+                    remaining_followers)
+       
+            # this is super hacky; i'm not proud of this
+            subject = subject.replace(" and 0 others", "")
+            subject = subject.replace("1 others", "1 other")
+        
+            follower_intro = "And just in case you were curious, these folks are looking forward to it:"
+            body = '%s\n%s\n%s\n\n%s' % (
+                    MISSED_SNIPPETS, 
+                    follower_intro, 
+                    all_followers.replace(',',', '),
+                    'Hugs,\nSnippets')
+
+        else:
+            subject = ":( :( :( We missed hearing from you!"
+            body = '%s\n%s' % (
+                    MISSED_SNIPPETS,
+                    'Hugs,\nSnippets')
+
+        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
+                       to=email,
+                       subject=subject,
+                       body=body)
+
+    def get(self):
+        self.post()
 
 class ReminderEmail(framework.BaseHandler):
     def get(self):
@@ -48,8 +121,7 @@ class OneReminderEmail(framework.BaseHandler):
         email = self.request.get('email')
         if self.request.get('final') == "true":
             subject = "Re: " + subject 
-            body = "Just a heads up, your snippet is due by 7pm tomorrow.\n"
-
+            body = FINAL_REMINDER
         else:
             desired_user = user_from_email(email)
             snippets = desired_user.snippet_set
@@ -100,9 +172,9 @@ class OneDigestEmail(framework.BaseHandler):
         logging.info(all_snippets)
         body = '\n\n'.join([self.__snippet_to_text(s) for s in all_snippets if s.user.email in following])
         if body:
-            followed_users = [u.encode('UTF8') for u in user.following]
+            following_users = [u.encode('UTF8') for u in user.following]
             missing = set()
-            for u in followed_users:
+            for u in following_users:
                 if u not in submitted_users(d):
                     missing.add(u.split('@')[0])
             title = 'For the week of %s\n%s' % (d, '-' * 50)

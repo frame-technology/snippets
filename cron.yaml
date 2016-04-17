@@ -1,4 +1,8 @@
 cron:
+- description: weekly missed 
+  url: /missedemail
+  schedule: every tuesday 10:00
+  timezone: America/New_York
 - description: final reminder
   url: /reminderemail?final=true
   schedule: every sunday 19:00
