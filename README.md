@@ -37,4 +37,5 @@ Little attention has been paid to making this particularly scalable, but it shou
 * Added support for custom filters/tags
 * Added last submitted snippet to reminder email
 * Added a final reminder email
+* Added an email for people that forgot to submit snippets
 * General usability improvements and clean-up
