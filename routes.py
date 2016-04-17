@@ -19,8 +19,10 @@ SITE =  [
     ('/tag/(.*)', site.TagHandler),
     ('/follow', site.FollowHandler),
     ('/unfollow', site.UnfollowHandler),
+    ('/missedemail', emails.MissedEmail),
     ('/reminderemail', emails.ReminderEmail),
     ('/digestemail', emails.DigestEmail),
+    ('/onemissed', emails.OneMissedEmail),
     ('/onereminder', emails.OneReminderEmail),
     ('/onedigest', emails.OneDigestEmail),
 ]
