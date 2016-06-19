@@ -9,7 +9,7 @@ from model import *
 
 from django.conf import settings
 
-from utilities import mandrill
+from utilities.mandrill import * 
 from utilities import framework
 
 REMINDER = """
@@ -93,10 +93,14 @@ class OneMissedEmail(framework.BaseHandler):
                     MISSED_SNIPPETS,
                     'Hugs,\nSnippets')
 
-        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
-                       to=email,
-                       subject=subject,
-                       body=body)
+        MandrillEmail.email(
+            email,
+            None,
+            subject,
+            ['snippets', ],
+            body,
+            body
+        )
 
     def get(self):
         self.post()
@@ -135,7 +139,7 @@ class OneReminderEmail(framework.BaseHandler):
                 body = '%s\n%s\n\n%s' % (body, ps, last_snippet)
 
         MandrillEmail.email(
-            'fcharris@gmail.com',
+            email,
             None,
             subject,
             ['snippets', ],
@@ -156,10 +160,14 @@ class DigestEmail(framework.BaseHandler):
 
 class OneDigestEmail(framework.BaseHandler):
     def __send_mail(self, recipient, body):
-        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
-                       to=recipient,
-                       subject="Snippet delivery!",
-                       body=body)
+        MandrillEmail.email(
+            recipient,
+            None,
+            "Snippet delivery!"
+            ['snippets', ],
+            body,
+            body
+        )
 
     def __snippet_to_text(self, snippet):
         divider = '-' * 30
