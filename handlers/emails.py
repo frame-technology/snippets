@@ -29,7 +29,7 @@ Snippets
 """
 
 FINAL_REMINDER = """
-Just a heads up, your snippet is due by 7pm tomorrow.
+Just a heads up, your snippet is due by 7pm today.
 """
 
 MISSED_SNIPPETS = """
