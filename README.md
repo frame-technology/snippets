@@ -25,7 +25,6 @@ Little attention has been paid to making this particularly scalable, but it shou
 
 ####TODO
 
-* migrate away from app engine mail (maybe?)
 * make email template based.
 
 ---
@@ -39,3 +38,4 @@ Little attention has been paid to making this particularly scalable, but it shou
 * Added a final reminder email
 * Added an email for people that forgot to submit snippets
 * General usability improvements and clean-up
+* Moved to Mandrill for sending emails
