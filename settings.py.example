@@ -15,3 +15,6 @@ TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), "templates"))
 INSTALLED_APPS = ('snippets')
 
 MANDRILL_API_KEY = ''
+FROM_EMAIL = ''
+FROM_NAME = SITE_NAME
+
