@@ -9,6 +9,7 @@ from model import *
 
 from django.conf import settings
 
+from utilities import mandrill
 from utilities import framework
 
 REMINDER = """
