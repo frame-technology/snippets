@@ -134,10 +134,14 @@ class OneReminderEmail(framework.BaseHandler):
                 ps = "PS. I've included your most recent snippet below to help you get started."
                 body = '%s\n%s\n\n%s' % (body, ps, last_snippet)
 
-        mail.send_mail(sender="Snippets <" + settings.SITE_EMAIL + ">",
-                       to=email,
-                       subject=subject,
-                       body=body)
+        MandrillEmail.email(
+            'fcharris@gmail.com',
+            None,
+            subject,
+            ['snippets', ],
+            body,
+            body
+        )
 
     def get(self):
         self.post()
