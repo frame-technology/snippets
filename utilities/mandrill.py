@@ -1,7 +1,6 @@
 import json
 
 from google.appengine.api import urlfetch
-from google.appengine.ext import deferred
 
 from django.conf import settings
 
@@ -28,11 +27,7 @@ class MandrillEmail(object):
             },
         }
 
-        deferred.defer(
-            cls.send,
-            message,
-            _queue='emails',
-        )
+        return cls.send(message)
 
     @classmethod
     def send(cls, message):
