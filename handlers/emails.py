@@ -99,7 +99,7 @@ class OneMissedEmail(framework.BaseHandler):
             subject,
             ['snippets', ],
             body,
-            body
+            None 
         )
 
     def get(self):
@@ -144,7 +144,7 @@ class OneReminderEmail(framework.BaseHandler):
             subject,
             ['snippets', ],
             body,
-            body
+            None 
         )
 
     def get(self):
@@ -163,10 +163,10 @@ class OneDigestEmail(framework.BaseHandler):
         MandrillEmail.email(
             recipient,
             None,
-            "Snippet delivery!"
+            "Snippet delivery!",
             ['snippets', ],
             body,
-            body
+            None 
         )
 
     def __snippet_to_text(self, snippet):
