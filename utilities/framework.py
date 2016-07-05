@@ -38,6 +38,7 @@ class BaseHandler(webapp2.RequestHandler):
             'site_email':settings.SITE_EMAIL,
             'site_icon':settings.SITE_ICON,
             'bugs_url':settings.BUGS_URL,
+            'learn_more':settings.LEARN_MORE,
             }
 
 
