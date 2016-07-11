@@ -29,26 +29,29 @@
 {% endif %}
 
 <div class="row">
-<div class="col-md-3 pull-right well">
-    <img class="img-thumbnail pull-right" src="https://0.gravatar.com/avatar/{{email_md5}}?s=215" >
-    <b>Tags</b><br/>
-    {%if not owner %}
-      {% for tag in tags %}
-          {{ tag.0 }}
-  		    {% if tag.1 %}
-  		      ✓ <a class="light" href="/unfollow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">unfollow</a>
-  		    {% else %}
-  		      <a class="light" href="/follow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">follow</a>
-  		    {% endif %}
-          <br/>
-      {% endfor %}
-    {% else %}
-      <form method="get"><input name="tags" class="span2" type="text" placeholder="tag1, tag2"  value="{{ current_user.tags|join:"," }}"/></form>
-    {% endif %}
-
+  <div class="col-md-3 col-md-push-8">
+    <div class="well">
+      <img class="img-thumbnail" src="https://0.gravatar.com/avatar/{{email_md5}}?s=215" >
+      <div>
+        <b>Tags</b><br/>
+        {%if not owner %}
+          {% for tag in tags %}
+            {{ tag.0 }}
+            {% if tag.1 %}
+              ✓ <a class="light" href="/unfollow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">unfollow</a>
+            {% else %}
+              <a class="light" href="/follow?tag={{ tag.0 }}&continue=/user/{{ user.email }}">follow</a>
+            {% endif %}
+            <br/>
+          {% endfor %}
+        {% else %}
+          <form method="get"><input name="tags" class="span2" type="text" placeholder="tag1, tag2"  value="{{ current_user.tags|join:"," }}"/></form>
+        {% endif %}
+      </div>
+    </div>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-8 col-md-pull-3">
     {% for snippet in snippets %}
       <b>Week {{ snippet.date|date:"W" }}: 
         {{ snippet.date }} - {{ snippet.date|deltaDays }}</b><br/>
